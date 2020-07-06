@@ -1110,6 +1110,7 @@ func (system *ModuleSystem) IncrementalBuild(
 
 	for _, className := range system.classOrder {
 		for _, instance := range resolvedModules[className] {
+			fmt.Printf("BUILDING: %+v\n", instance)
 			spec, ok, err := system.getSpec(instance)
 			if err != nil {
 				// if incrementalBuild fails, perform a full build.
@@ -1117,6 +1118,7 @@ func (system *ModuleSystem) IncrementalBuild(
 				toBeBuiltModules = resolvedModules
 			}
 			if ok {
+				fmt.Printf("  SPEC: %+v\n", spec)
 				instance.genSpec = spec
 			}
 		}
@@ -1202,7 +1204,11 @@ func (system *ModuleSystem) Build(
 	}
 
 	if buildResult == nil {
+		fmt.Printf(" BUILD IS NULL:  %s\n", instance.InstanceName)
 		return nil
+	}
+	if buildResult.Spec == nil {
+		fmt.Printf(" BUILD.Spec IS NULL:  %s\n", instance.InstanceName)
 	}
 	instance.genSpec = buildResult.Spec
 	if !commitChange {
