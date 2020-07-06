@@ -22,6 +22,7 @@ package codegen
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/textproto"
 	"path/filepath"
 	"sort"
@@ -1477,7 +1478,12 @@ func readClientDependencySpecs(instance *ModuleInstance) []*ClientSpec {
 	clients := []*ClientSpec{}
 
 	for _, clientDep := range instance.ResolvedDependencies["client"] {
-		clients = append(clients, clientDep.GeneratedSpec().(*ClientSpec))
+		client := clientDep.GeneratedSpec().(*ClientSpec)
+		fmt.Printf("CLIENT: %+v\n", client)
+		if client == nil {
+			fmt.Printf("  NULL CLIENT:  %+v\n", clientDep)
+		}
+		clients = append(clients)
 	}
 
 	sort.Sort(sortByClientName(clients))
