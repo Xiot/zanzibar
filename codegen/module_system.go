@@ -1478,11 +1478,11 @@ func readClientDependencySpecs(instance *ModuleInstance) []*ClientSpec {
 	clients := []*ClientSpec{}
 
 	for _, clientDep := range instance.ResolvedDependencies["client"] {
+
 		client := clientDep.GeneratedSpec().(*ClientSpec)
-		fmt.Printf("CLIENT: %+v\n", client)
-		if client == nil {
-			fmt.Printf("  NULL CLIENT:  %+v\n", clientDep)
-		}
+		fmt.Printf("DEP:  %+v\n", clientDep)
+		fmt.Printf("  CLIENT: %+v\n", client)
+
 		clients = append(clients)
 	}
 
